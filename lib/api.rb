@@ -19,20 +19,6 @@ module Api
         end
     end
 
-    class ApiServer < Sinatra::Base
-        #register Sinatra::SessionAuth
-        # 用户认证过滤器
-=begin
-        register RequireUser
-
-        get '/env' do
-            puts env
-            env.to_s
-        end
-=end
-
-    end
-
     module V1
         class Server < Sinatra::Base
             register UserController

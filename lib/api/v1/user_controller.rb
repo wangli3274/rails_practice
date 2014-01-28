@@ -1,6 +1,7 @@
 module Api::V1::UserController
 
     def self.registered(app)
+      
           app.helpers Helpers
         
           app.post '/users/create' do
@@ -18,7 +19,7 @@ module Api::V1::UserController
     end  # END def self.registered(app)
     
     module Helpers
-        # args:
+
         def render_json(json={})
             JSON.generate({:status => 0, :msg => "success."}.merge(json))
         end

@@ -29,30 +29,3 @@
   </div>
 <% end %>
 
-<input type="button" value="Create User with Sinatra API" id="hello"></input>
-<br>
-<script language="javascript">
-(function() {
-  $(document).ready(function() {
-    return $('#hello').bind('click', function() {
-        if(!$('#user_name').val()){
-          alert("Name is null");
-          return false;
-        }
-        $.ajax({
-          url: '/api/v1/users/create',
-          type: "post",
-          data: $("#new_user").serialize(),
-          cache: false,
-          dataType: 'json',
-          timeout: 10000,
-          success: function(data, textStatus){
-            location.href="/users/"+data['id']
-          }
-        });
-      return;
-    });
-  });
-
-}).call(this);
-</script>

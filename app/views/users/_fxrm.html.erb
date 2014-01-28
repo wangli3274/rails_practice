@@ -1,0 +1,58 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :avatar %><br>
+    <%= f.file_field :avatar %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<input type="button" value="Create User with Sinatra API" id="hello"></input>
+<br>
+<script language="javascript">
+(function() {
+  $(document).ready(function() {
+    return $('#hello').bind('click', function() {
+        if(!$('#user_name').val()){
+          alert("Name is null");
+          return false;
+        }
+        $.ajax({
+          url: '/api/v1/users/create',
+          type: "post",
+          data: $("#new_user").serialize(),
+          cache: false,
+          dataType: 'json',
+          timeout: 10000,
+          success: function(data, textStatus){
+            location.href="/users/"+data['id']
+          }
+        });
+      return;
+    });
+  });
+
+}).call(this);
+</script>

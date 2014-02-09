@@ -21,3 +21,17 @@ Paperclip::Attachment.default_options[:hash_secret] = "1234567890"
 
 这是个全局的文件，保存在config/initializers/paperclip.rb这里。
 
+
+日志打印方式修改：
+日志打印一般不用print，用Rails.logger.info(error|debug|fatal等)
+日志打印到以下文件：
+开发环境：logs/development.log
+测试环境：logs/test.log
+生产环境：logs/production.log
+
+具体的可以在development.rb文件中配置：
+1. config.log_level 定义 Rails 日志的冗长程度. 这个选项默认为 :debug 并对所有模式有效,除了生产模式. 生产模式默认为:info
+   例：config.log_level = :warn      # 只打印warn以上的日志
+2. config.file_parameters 用于过滤掉不想被显示在日志里的参数, 比如密码和信用卡号码.
+   例：config.filter_parameters += [:password]   # 日志中不显示密码
+......

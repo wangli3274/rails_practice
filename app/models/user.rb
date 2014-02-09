@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_attached_file :avatar, 
-    :path => ":rails_root/public/system/:class/:attachement/:id/:basename_:style.:extension",
-    :url => "/system/:class/:attachement/:id/:basename_:style.:extension",
+    # :path => ":rails_root/public/system/:class/:attachement/:id/:basename_:style.:extension",
+    # :url => "/system/:class/:attachement/:id/:basename_:style.:extension",
     :styles => {
       :thumb    => ['100x100#',  :jpg, :quality => 70],
       :preview  => ['480x480#',  :jpg, :quality => 70],

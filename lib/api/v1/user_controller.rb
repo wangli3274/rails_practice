@@ -5,12 +5,15 @@ module Api::V1::UserController
           app.helpers Helpers
         
           app.post '/users/create' do
-            print params[:user]
+           # print params[:user]
+            Rails.logger.info(params[:user])
             @user = User.new(params[:user])
             if @user.save
-              print "Save OK\n"
+              Rails.logger.info("logger Save OK")
+             # print "Save OK\n"
             else
-              print "Save ERROR\n"
+              Rails.logger.error("logger Save ERROR")
+             # print "Save ERROR\n"
             end
             render_json(:id => @user[:id])
           end

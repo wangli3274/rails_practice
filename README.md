@@ -8,8 +8,10 @@
 sinatra主要提供Api级别的服务，在本案例中，create user部分同时实现了sinatra api方式的调用（通过ajax请求调用api，没有实现图片上传功能）。
 
 
-* ============ 2014/02/09 START===============
-paperclip命名方式修改：
+ ============ 2014/02/09 START===============
+
+### paperclip命名方式修改：
+
 User模型：
 
 	:path => ":rails_root/public/system/:class/:attachement/:id/:basename_:style.:extension",
@@ -27,20 +29,28 @@ User模型：
 这是个全局的文件，保存在config/initializers/paperclip.rb这里。
 
 
-日志打印方式修改：
+### 日志打印方式修改：
+
 日志打印一般不用print，用Rails.logger.info(error|debug|fatal等)
 日志打印到以下文件：
-开发环境：logs/development.log
-测试环境：logs/test.log
-生产环境：logs/production.log
+
+	开发环境：logs/development.log
+	测试环境：logs/test.log
+	生产环境：logs/production.log
 
 具体的可以在development.rb文件中配置：
+
 1. config.log_level 定义 Rails 日志的冗长程度. 这个选项默认为 :debug 并对所有模式有效,除了生产模式. 生产模式默认为:info
-   例：config.log_level = :warn      # 只打印warn以上的日志
+
+	例：config.log_level = :warn      # 只打印warn以上的日志
+
 2. config.file_parameters 用于过滤掉不想被显示在日志里的参数, 比如密码和信用卡号码.
-  例：config.filter_parameters += [:password]   # 日志中不显示密码
+
+	例：config.filter_parameters += [:password]   # 日志中不显示密码
+
 ......
-* ============= 2014/02/09 END===============
+
+ ============= 2014/02/09 END===============
 
 
 
@@ -68,6 +78,5 @@ User模型：
 	* 实现一个rails的tag controller
 	* 在poster controller里面，可以做到对某个poster打标签
 	* 在tag controller里面，可以根据某个tag把所有的poster搜索出来
-
 
 

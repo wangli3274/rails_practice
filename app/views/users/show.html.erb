@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @user.name %>
+  <strong >Name:</strong>
+  <label id="user_id"><%= @user.name %></label>
+
 </p>
 
 <p>
@@ -10,10 +11,246 @@
   <%= @user.description %>
 </p>
 
+
+
 <p>
   <strong>Avatar:</strong>
   <%= image_tag @user.avatar.url(:large) %>
 </p>
 
+<input type="button" value="Poster List Get" id="poster_get"></input>
+
+<div style="display: none;" id="poster_pagination">
+<!--   <span id="page_first"> <a href="/api/v1/user/posters?page=1" rel="prev">« First </a> </span>
+  <span id="page_first"> <a href="/api/v1/user/posters?page=1" rel="prev">‹ Prev</a>
+  <span id="page_next"> <a href="/api/v1/user/posters?page=2" rel="next">Next ›</a> </span>
+  <span id="page_last"> <a href="/api/v1/user/posters?page=2">Last »</a> </span>
+
+  <span id="page_view"></span> <br>
+  <span id="page_first"> « First </span>
+  <span id="page_prev"> ‹ Prev</span>
+  <span id="page_next"> Next ›</span>
+  <span id="page_last"> Last »</span>
+-->  
+  <span id="page_view"></span> <br>
+  <span id="page_first"> <u>« First </u></span>
+  <span id="page_prev"> <u>‹ Prev</u></span>
+  <span id="page_next"> <u>Next ›</u></span>
+  <span id="page_last"> <u>Last »</u></span>
+</div>
+
+
+<!-- <div id ="prev"> prev</div><div id ="next"> next</div> -->
+<table id="poster_list"></table>  
+<br>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+
+
+<script language="javascript">
+(function() {
+  $(document).ready(function() {
+    $('#poster_get').bind('click', function() {  
+
+        var data = "id=" + $("#user_id").text() + "&limit=5";
+         $.ajax({
+           url: '/api/v1/user/posters',
+           type: "post",
+           data: data,
+           cache: false,
+           dataType: 'json',
+           timeout: 10000,
+           success: function(data, textStatus){
+
+            var dx = data.posters;
+            if(dx && dx.length)
+            {
+              var tb = $('#poster_list');
+              var tb_str = "<thead><tr><td>Title</td><td>Content</td></tr></thead><tbody>";
+              for(var i=0; i<dx.length; i++)
+              {
+                tb_str += "<tr><td>" + dx[i]['title'] + "</td><td>" +  dx[i]['content'] + "</td></tr>";
+              } 
+              tb_str += "</tbody>";
+
+              var limit = 5;
+              if (data.len > limit)
+              {
+                var page = Math.ceil(data.len / limit);
+                $('#page_view').text("Page: 1/" + page);
+                $('#page_view').attr("total", page);
+                $('#page_view').attr("curr", 1);
+                document.getElementById("poster_pagination").style.display="";  
+              }
+                   
+              tb.empty().append(tb_str);              
+                
+            }
+            else
+            {
+              $('#poster_get').after("<span style=\"font-size:12px;color:#FF0000;\">No Poster!</span>");
+            }
+           }
+         });
+    });
+
+    $('#page_first').bind('click', function() {  
+        var curr = $('#page_view').attr("curr");
+        if (curr == 1)
+        {
+          alert("Already the first page!");
+          return;
+        }
+        
+        var data = "id=" + $("#user_id").text() + "&limit=5&page=1";
+         $.ajax({
+           url: '/api/v1/user/posters',
+           type: "post",
+           data: data,
+           cache: false,
+           dataType: 'json',
+           timeout: 10000,
+           success: function(data, textStatus){
+
+            var dx = data.posters;
+            if(dx && dx.length)
+            {
+              var tb = $('#poster_list');
+              var tb_str = "<thead><tr><td>Title</td><td>Content</td></tr></thead><tbody>";
+              for(var i=0; i<dx.length; i++)
+              {
+                tb_str += "<tr><td>" + dx[i]['title'] + "</td><td>" +  dx[i]['content'] + "</td></tr>";
+              } 
+              tb_str += "</tbody>";
+
+              $('#page_view').text("Page: 1/" + $('#page_view').attr("total"));
+              $('#page_view').attr("curr", 1);                   
+              tb.empty().append(tb_str);              
+                
+            }
+           }
+         });
+    });
+
+    $('#page_prev').bind('click', function() {  
+        var curr = $('#page_view').attr("curr");
+        if (curr == 1)
+        {
+          alert("Already the first page!");
+          return;
+        }
+
+        curr -= 1;
+        var data = "id=" + $("#user_id").text() + "&limit=5&page=" + curr;        
+        $.ajax({
+           url: '/api/v1/user/posters',
+           type: "post",
+           data: data,
+           cache: false,
+           dataType: 'json',
+           timeout: 10000,
+           success: function(data, textStatus){
+
+            var dx = data.posters;
+            if(dx && dx.length)
+            {
+              var tb = $('#poster_list');
+              var tb_str = "<thead><tr><td>Title</td><td>Content</td></tr></thead><tbody>";
+              for(var i=0; i<dx.length; i++)
+              {
+                tb_str += "<tr><td>" + dx[i]['title'] + "</td><td>" +  dx[i]['content'] + "</td></tr>";
+              } 
+              tb_str += "</tbody>";
+
+              $('#page_view').text("Page: " + curr + "/" + $('#page_view').attr("total"));
+              $('#page_view').attr("curr", curr);          
+              tb.empty().append(tb_str); 
+                
+            }
+           }
+         });
+    });
+
+    $('#page_next').bind('click', function() { 
+        var curr = parseInt($('#page_view').attr("curr"));
+        var total = parseInt($('#page_view').attr("total"));
+        if (curr == total)
+        {
+          alert("Already the last page!");
+          return;
+        }
+
+        curr += 1; 
+        
+        var data = "id=" + $("#user_id").text() + "&limit=5&page=" + curr;
+        $.ajax({
+           url: '/api/v1/user/posters',
+           type: "post",
+           data: data,
+           cache: false,
+           dataType: 'json',
+           timeout: 10000,
+           success: function(data, textStatus){
+
+            var dx = data.posters;
+            if(dx && dx.length)
+            {
+              var tb = $('#poster_list');
+              var tb_str = "<thead><tr><td>Title</td><td>Content</td></tr></thead><tbody>";
+              for(var i=0; i<dx.length; i++){
+                tb_str += "<tr><td>" + dx[i]['title'] + "</td><td>" +  dx[i]['content'] + "</td></tr>";
+              } 
+              tb_str += "</tbody>";
+
+              $('#page_view').text("Page: " + curr + "/" + total);
+              $('#page_view').attr("curr", curr);          
+              tb.empty().append(tb_str);               
+                
+            }
+           }
+         });
+    });
+
+    $('#page_last').bind('click', function() {  
+        var curr = parseInt($('#page_view').attr("curr"));
+        var total = parseInt($('#page_view').attr("total"));
+        if (curr == total)
+        {
+          alert("Already the last page!");
+          return;
+        }
+
+        var data = "id=" + $("#user_id").text() + "&limit=5&page=" + total;
+         $.ajax({
+           url: '/api/v1/user/posters',
+           type: "post",
+           data: data,
+           cache: false,
+           dataType: 'json',
+           timeout: 10000,
+           success: function(data, textStatus){
+
+            var dx = data.posters;          
+            if(dx && dx.length)
+            {
+              var tb = $('#poster_list');
+              var tb_str = "<thead><tr><td>Title</td><td>Content</td></tr></thead><tbody>";
+              for(var i=0; i<dx.length; i++)
+              {
+                tb_str += "<tr><td>" + dx[i]['title'] + "</td><td>" +  dx[i]['content'] + "</td></tr>";
+              } 
+              tb_str += "</tbody>";
+              $('#page_view').text("Page: " + total + "/" + total);
+              $('#page_view').attr("curr", total);          
+              tb.empty().append(tb_str);              
+                
+            }
+           }
+         });
+    });
+
+  });
+
+}).call(this);
+</script>

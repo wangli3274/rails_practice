@@ -39,3 +39,5 @@ gem 'paperclip', '~> 3.0'
 gem 'cocaine', '~> 0.4.0'
 
 gem 'sinatra'
+gem 'mongoid', github: 'mongoid/mongoid'
+gem 'kaminari'  # paginator

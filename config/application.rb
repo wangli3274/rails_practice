@@ -26,6 +26,10 @@ module PaperclipExample
     config.i18n.default_locale = :"zh-cn"
     config.active_record.default_timezone = :local
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.generators do |g|
+      g.orm :active_record
+    end
     
   end
 end

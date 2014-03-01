@@ -1,0 +1,44 @@
+<h1>Listing posters</h1>
+
+ <%= paginate @posters %>  
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Create at</th>
+      <th>Update at</th>
+      <th>Tags</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posters.each do |poster| %>
+      <tr>
+        <td><%= poster.user_id %></td>
+        <td><%= poster.title %></td>
+        <td><%= poster.content %></td>
+        <td><%= poster.create_at %></td>
+        <td><%= poster.update_at %></td>
+        <td>              
+            <% poster.tags.each do |tag| %>
+              <%= tag.name %>&nbsp
+            <% end %>
+        </td>
+        <!-- <td><%= poster.tags.count %></td> -->
+        <td><%= link_to 'Show', poster %></td>
+        <td><%= link_to 'Edit', edit_poster_path(poster) %></td>
+        <td><%= link_to 'Destroy', poster, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Poster', new_poster_path %>

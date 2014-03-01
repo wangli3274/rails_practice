@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @poster.user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @poster.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @poster.content %>
+</p>
+
+<p>
+  <strong>Create at:</strong>
+  <%= @poster.create_at %>
+</p>
+
+<p>
+  <strong>Update at:</strong>
+  <%= @poster.update_at %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+    <% @tags.each do |tag| %>
+      <%= tag.name %>&nbsp
+    <% end %> 
+</p>
+
+<%= link_to 'Edit', edit_poster_path(@poster) %> |
+<%= link_to 'Back', posters_path %>

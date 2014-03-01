@@ -1,0 +1,46 @@
+<%= form_for(@poster) do |f| %>
+  <% if @poster.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@poster.errors.count, "error") %> prohibited this poster from being saved:</h2>
+
+      <ul>
+      <% @poster.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+ <!--  <div class="field">
+    <%= f.label :create_at %><br>
+    <%= f.number_field :create_at %>
+  </div>
+  <div class="field">
+    <%= f.label :update_at %><br>
+    <%= f.number_field :update_at %>
+  </div> -->
+
+  <div class="field">
+    <%= f.label :tags %>
+      <% @tags.each do |tag| %>
+        <%= check_box_tag 'poster[tag_ids][]', tag.id%>  
+        <%= label_tag tag.name %>  
+      <% end %> 
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

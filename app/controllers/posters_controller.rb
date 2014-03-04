@@ -10,6 +10,8 @@ class PostersController < ApplicationController
     @posters.each do |poster|
       poster.tags = Tag.find(poster.tag_ids)
     end
+
+    @title = "Poster"
     
   end
 
@@ -27,6 +29,8 @@ class PostersController < ApplicationController
 
   # GET /posters/1/edit
   def edit
+    @tags = Tag.all
+    @p_tags = Tag.find(@poster.tag_ids)
   end
 
   # POST /posters

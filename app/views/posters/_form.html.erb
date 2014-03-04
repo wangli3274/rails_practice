@@ -23,22 +23,23 @@
     <%= f.label :content %><br>
     <%= f.text_field :content %>
   </div>
- <!--  <div class="field">
-    <%= f.label :create_at %><br>
-    <%= f.number_field :create_at %>
-  </div>
-  <div class="field">
-    <%= f.label :update_at %><br>
-    <%= f.number_field :update_at %>
-  </div> -->
-
-  <div class="field">
-    <%= f.label :tags %>
-      <% @tags.each do |tag| %>
-        <%= check_box_tag 'poster[tag_ids][]', tag.id%>  
-        <%= label_tag tag.name %>  
-      <% end %> 
-  </div>
+  <% if @tags %>
+    <div class="field">
+      <%= f.label :tags %>
+        <% @tags.each do |tag| %>
+          <% flg = 0 %> 
+          <% if @p_tags %>
+            <% @p_tags.each do |p_tag| %>
+              <% if p_tag.id == tag.id %>            
+                <% flg = 1 %> 
+              <% end %> 
+            <% end %> 
+          <% end %> 
+          <%= check_box_tag 'poster[tag_ids][]', tag.id, ('checked' if flg == 1 ) %>  
+          <%= label_tag tag.name %>  
+        <% end %> 
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

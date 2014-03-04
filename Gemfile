@@ -33,9 +33,17 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'paperclip', '~> 3.0'
+group :development do
+    gem 'rspec-rails', '~> 2.10.0'
+    gem 'guard-rspec'
+end
 
-#gem 'cocaine', '0.3.2'
+group :test do
+    gem 'rspec-rails', '~> 2.10.0'
+    gem 'guard-rspec'
+end
+
+gem 'paperclip', '~> 3.0'
 gem 'cocaine', '~> 0.4.0'
 
 gem 'sinatra'

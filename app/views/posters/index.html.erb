@@ -1,3 +1,5 @@
+<% content_for :title, @title%>
+
 <h1>Listing posters</h1>
 
  <%= paginate @posters %>  
@@ -23,8 +25,8 @@
         <td><%= poster.user_id %></td>
         <td><%= poster.title %></td>
         <td><%= poster.content %></td>
-        <td><%= poster.create_at %></td>
-        <td><%= poster.update_at %></td>
+        <td><%= poster.created_at.to_time %></td>
+        <td><%= poster.updated_at.to_time %></td>
         <td>              
             <% poster.tags.each do |tag| %>
               <%= tag.name %>&nbsp

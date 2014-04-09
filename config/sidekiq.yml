@@ -1,0 +1,11 @@
+#   sidekiq -C config.yml
+---
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+:concurrency:  50
+:queues:
+  # - [trade, 15]
+  - [default, 10]
+  # - [qrcode, 15]
+  # - [cache, 5]
+  # - [push, 5]

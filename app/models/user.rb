@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  include Sidekiq::Worker
+  
   has_attached_file :avatar, 
     # :path => ":rails_root/public/system/:class/:attachement/:id/:basename_:style.:extension",
     # :url => "/system/:class/:attachement/:id/:basename_:style.:extension",
@@ -24,4 +27,15 @@ class User < ActiveRecord::Base
   validates :name,
     :presence => true,
     :uniqueness => true
+    
+    
+    
+  def self.sidekiq_test()
+      puts 'aaaaaaaaaaaaa'
+  end
+  
+  def perform(name, count)
+    puts 'Sidekiq Test!!! Doing hard work: name=' + name + ', count=' + count.to_s 
+  end
+  
 end

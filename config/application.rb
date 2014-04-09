@@ -25,6 +25,11 @@ module PaperclipExample
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :"zh-cn"
     config.active_record.default_timezone = :local
+    
+    
+    I18n.enforce_available_locales = false
+    
+    
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.generators do |g|

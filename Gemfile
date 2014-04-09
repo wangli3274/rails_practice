@@ -46,6 +46,18 @@ end
 gem 'paperclip', '~> 3.0'
 gem 'cocaine', '~> 0.4.0'
 
-gem 'sinatra'
+# gem 'sinatra'
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'kaminari'  # paginator
+
+# 异步任务
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+
+gem 'eventmachine'
+gem 'em-http-request'
+gem 'em-synchrony'
+gem 'rainbows'
+gem 'async_sinatra'
+
+gem 'debugger'
